@@ -1,0 +1,18 @@
+version: "2"
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./mysql/init:/docker-entrypoint-initdb.d"
+      - "./mysql/data:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+  phpapp:
+    image: phpapp
+    build: build/phpapp
+    volumes:
+      - "./app:/var/www/html"
+    ports:
+      - "8080:80"
